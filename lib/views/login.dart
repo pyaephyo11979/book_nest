@@ -12,6 +12,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _isHidden = true;
+  bool isLoading = false;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -41,6 +42,11 @@ class _LoginPageState extends State<LoginPage> {
         password: passwordController.text,
         context: context,
       );
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
     } catch (e) {
       if (mounted) {
         showToast(
@@ -148,17 +154,25 @@ class _LoginPageState extends State<LoginPage> {
                   width: double.infinity,
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: () {
-                      validate();
-                    },
+                    onPressed: isLoading
+                        ? null
+                        : () {
+                            setState(() {
+                              isLoading = true;
+                            });
+                            validate();
+                          },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.primary,
                       enabledMouseCursor: SystemMouseCursors.click,
+                      disabledMouseCursor: SystemMouseCursors.forbidden,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    child: Text('Login', style: TextStyle(color: Colors.white)),
+                    child: isLoading
+                        ? CircularProgressIndicator()
+                        : Text('Login', style: TextStyle(color: Colors.white)),
                   ),
                 ),
                 SizedBox(height: 50),

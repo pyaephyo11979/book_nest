@@ -13,6 +13,7 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   bool _isHidden = true;
+  bool isLoading = false;
   TextEditingController fullNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -51,6 +52,11 @@ class _SignUpPageState extends State<SignUpPage> {
         passwordController.text,
         context,
       );
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
     } catch (e) {
       // Handle validation errors (e.g., show an error message)
       log(e.toString());
@@ -177,19 +183,23 @@ class _SignUpPageState extends State<SignUpPage> {
                   width: double.infinity,
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: () {
-                      validate();
-                    },
+                    onPressed: isLoading
+                        ? null
+                        : () {
+                            setState(() {
+                              isLoading = true;
+                            });
+                            validate();
+                          },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.primary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    child: Text(
-                      'SignUp',
-                      style: TextStyle(color: Colors.white),
-                    ),
+                    child: isLoading
+                        ? CircularProgressIndicator()
+                        : Text('SignUp', style: TextStyle(color: Colors.white)),
                   ),
                 ),
                 SizedBox(height: 50),

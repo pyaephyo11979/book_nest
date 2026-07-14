@@ -89,15 +89,6 @@ class _BookDetailState extends State<BookDetail> {
             ),
             SizedBox(height: 10),
             Text(
-              book.publicationYear.toString(),
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-            ),
-            SizedBox(height: 10),
-            Text(
-              book.publisher,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-            ),
-            Text(
               book.bookCategories?.isNotEmpty == true
                   ? book.bookCategories!.map((c) => c.category?.name).join(', ')
                   : 'No category',
@@ -136,7 +127,11 @@ class _BookDetailState extends State<BookDetail> {
           padding: const EdgeInsets.all(5.0),
           child: ElevatedButton(
             onPressed: () {
-              context.push('/epub_reader/${book.id}');
+              if (book.price > 0.0) {
+                context.push('/payment/${book.id}');
+              } else {
+                context.push('/epub_reader/${book.id}');
+              }
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Theme.of(context).colorScheme.primary,

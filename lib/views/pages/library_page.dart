@@ -121,7 +121,9 @@ class _LibraryPageState extends State<LibraryPage> {
                                       selectedCategoryId ==
                                           categories[index]['id']
                                       ? Colors.white
-                                      : Colors.black,
+                                      : Theme.of(
+                                          context,
+                                        ).textTheme.bodyLarge?.color,
                                 ),
                               ),
                             ),
@@ -143,7 +145,7 @@ class _LibraryPageState extends State<LibraryPage> {
                             ),
                             SizedBox(height: 10),
                             Text(
-                              'No results found for "${categories.firstWhere((cat) => cat['id'] == selectedCategoryId)['name']}"',
+                              'No results found for ${categories.firstWhere((cat) => cat['id'] == selectedCategoryId)['name']} Category',
                               style: TextStyle(fontSize: 16),
                             ),
                           ],

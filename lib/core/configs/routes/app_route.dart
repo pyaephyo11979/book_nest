@@ -10,13 +10,6 @@ import 'package:book_nest/core/services/auth_service.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: '/login',
-  redirect: (context, state) async {
-    final isLoggedIn = await AuthService().isLoggedIn();
-    if (!isLoggedIn && state.path != '/login' && state.path != '/signup') {
-      return '/login';
-    }
-    return null;
-  },
   routes: [
     GoRoute(path: '/', builder: (context, state) => const Home()),
     GoRoute(
