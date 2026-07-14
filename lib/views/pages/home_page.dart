@@ -1,7 +1,6 @@
 import 'package:book_nest/controllers/book_controller.dart';
 import 'package:book_nest/core/widgets/book_card.dart';
 import 'package:book_nest/models/book_model.dart';
-import 'package:book_nest/repositories/book_api.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:go_router/go_router.dart';
@@ -27,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   List<String> imagePaths = [];
 
   void fetchAll() async {
-    final controller = BookController(bookApi: BookApi());
+    final controller = BookController();
     final fetchedCategories = await controller.getCategories();
     final fetchedBooks = await controller.getBooks();
     final fetchedFamousBooks = await controller.getFamousBooks();

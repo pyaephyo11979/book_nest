@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:book_nest/repositories/user_api.dart';
 import 'package:book_nest/controllers/user_controller.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
@@ -37,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
     try {
       validateEmail(emailController.text);
       validatePassword(passwordController.text);
-      await UserController(userApi: UserApi()).login(
+      await UserController().login(
         email: emailController.text,
         password: passwordController.text,
         context: context,

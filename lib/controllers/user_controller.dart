@@ -3,9 +3,7 @@ import 'package:book_nest/repositories/user_api.dart';
 import 'package:flutter/material.dart';
 
 class UserController {
-  final UserApi userApi;
-
-  UserController({required this.userApi});
+  final UserApi userApi = UserApi();
 
   Future<UserModel> getUserData(int id) async {
     return await userApi.getUserData(id);

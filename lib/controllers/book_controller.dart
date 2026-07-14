@@ -2,8 +2,7 @@ import 'package:book_nest/models/book_model.dart';
 import 'package:book_nest/repositories/book_api.dart';
 
 class BookController {
-  final BookApi bookApi;
-  BookController({required this.bookApi});
+  final BookApi bookApi = BookApi();
 
   Future<List<Map<String, dynamic>>> getCategories() async {
     List<Map<String, dynamic>> categories = await bookApi.getCategories();

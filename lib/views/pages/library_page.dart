@@ -1,7 +1,6 @@
 import 'package:book_nest/controllers/book_controller.dart';
 import 'package:book_nest/core/widgets/book_card.dart';
 import 'package:book_nest/models/book_model.dart';
-import 'package:book_nest/repositories/book_api.dart';
 import 'package:flutter/material.dart';
 
 class LibraryPage extends StatefulWidget {
@@ -20,7 +19,7 @@ class _LibraryPageState extends State<LibraryPage> {
   int selectedCategoryId = 0;
 
   void fetchBooksByCategory(int categoryId) async {
-    final controller = BookController(bookApi: BookApi());
+    final controller = BookController();
     if (categoryId == 0) {
       final fetchedBooks = await controller.getBooks();
       if (mounted) {
@@ -41,7 +40,7 @@ class _LibraryPageState extends State<LibraryPage> {
   }
 
   void fetchAll() async {
-    final controller = BookController(bookApi: BookApi());
+    final controller = BookController();
     if (widget.categoryId != 0) {
       selectedCategoryId = widget.categoryId;
     }

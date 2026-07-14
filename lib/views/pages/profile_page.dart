@@ -1,7 +1,6 @@
 import 'package:book_nest/controllers/user_controller.dart';
 import 'package:book_nest/models/user_model.dart';
 import 'package:book_nest/models/book_model.dart';
-import 'package:book_nest/repositories/user_api.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,7 +16,7 @@ class _ProfilePageState extends State<ProfilePage> {
   bool isLoading = true;
 
   void fetchUser() async {
-    final fetchedUser = await UserController(userApi: UserApi()).getUserData(1);
+    final fetchedUser = await UserController().getUserData(1);
     if (mounted) {
       setState(() {
         user = fetchedUser;
@@ -27,7 +26,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void logout() async {
-    await UserController(userApi: UserApi()).logout(context);
+    await UserController().logout(context);
   }
 
   @override

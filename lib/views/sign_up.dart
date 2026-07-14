@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'package:book_nest/controllers/user_controller.dart';
-import 'package:book_nest/repositories/user_api.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
@@ -46,7 +45,7 @@ class _SignUpPageState extends State<SignUpPage> {
       validateName(fullNameController.text);
       validateEmail(emailController.text);
       validatePassword(passwordController.text);
-      await UserController(userApi: UserApi()).signUp(
+      await UserController().signUp(
         fullNameController.text,
         emailController.text,
         passwordController.text,

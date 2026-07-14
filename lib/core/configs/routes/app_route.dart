@@ -15,7 +15,7 @@ final GoRouter router = GoRouter(
     if (!isLoggedIn && state.path != '/login' && state.path != '/signup') {
       return '/login';
     }
-    return '/';
+    return null;
   },
   routes: [
     GoRoute(path: '/', builder: (context, state) => const Home()),

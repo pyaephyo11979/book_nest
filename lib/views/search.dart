@@ -2,7 +2,6 @@ import 'package:book_nest/controllers/book_controller.dart';
 import 'package:book_nest/core/widgets/book_card.dart';
 import 'package:book_nest/core/widgets/nav_bar.dart';
 import 'package:book_nest/models/book_model.dart';
-import 'package:book_nest/repositories/book_api.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -25,9 +24,7 @@ class _SearchState extends State<Search> {
       _isLoading = true;
     });
     String query = _searchController.text.toLowerCase();
-    List<BookModel> results = await BookController(
-      bookApi: BookApi(),
-    ).searchBooks(query);
+    List<BookModel> results = await BookController().searchBooks(query);
     setState(() {
       _searchResults.clear();
       _searchResults.addAll(results);

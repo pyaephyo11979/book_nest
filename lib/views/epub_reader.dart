@@ -1,6 +1,5 @@
 import 'package:book_nest/controllers/book_controller.dart';
 import 'package:book_nest/models/book_model.dart';
-import 'package:book_nest/repositories/book_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_epub_viewer/flutter_epub_viewer.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
@@ -30,7 +29,7 @@ class _EpubReaderState extends State<EpubReader> {
 
     try {
       final bookId = int.parse(widget.id);
-      final bookController = BookController(bookApi: BookApi());
+      final bookController = BookController();
 
       final results = await Future.wait([
         bookController.getBookById(bookId),

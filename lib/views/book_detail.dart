@@ -1,6 +1,5 @@
 import 'package:book_nest/controllers/book_controller.dart';
 import 'package:book_nest/models/book_model.dart';
-import 'package:book_nest/repositories/book_api.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -16,9 +15,7 @@ class _BookDetailState extends State<BookDetail> {
   BookModel? book;
   bool isReadLater = false;
   void fetchBook() async {
-    final fetchedBook = await BookController(
-      bookApi: BookApi(),
-    ).getBookById(widget.id);
+    final fetchedBook = await BookController().getBookById(widget.id);
     setState(() {
       book = fetchedBook;
       isReadLater = fetchedBook.isBookmarked ?? false;
@@ -27,7 +24,7 @@ class _BookDetailState extends State<BookDetail> {
 
   void toggleReadLater() async {
     if (book == null) return;
-    final controller = BookController(bookApi: BookApi());
+    final controller = BookController();
     if (isReadLater) {
       await controller.removeSavedBook(book!.id);
     } else {
