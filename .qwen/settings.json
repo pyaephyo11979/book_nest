@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/pyaephyohlaing/Developer/BrainWaveData/lms_backend/controllers/**)",
+      "Read(//Users/pyaephyohlaing/Developer/BrainWaveData/lms_backend/**)"
+    ]
+  },
+  "$version": 4
+}
