@@ -9,7 +9,10 @@ import 'package:dio/dio.dart';
 class UserApi {
   Future<UserModel> getUserData(int id) async {
     try {
-      final response = await APIService().get(url: '/users/profile');
+      final response = await APIService().get(
+        url: '/users/profile',
+        isTokenNeed: true,
+      );
       if (response.statusCode == 200) {
         return UserModel.fromJson(
           response.data['data'] as Map<String, dynamic>,
@@ -80,10 +83,9 @@ class UserApi {
 
   Future<void> logout(BuildContext context) async {
     try {
-      String token = await SecureStorageService().getAuthToken();
       final response = await APIService().get(
         url: '/auth/logout',
-        header: {'Authorization': 'Bearer $token'},
+        isTokenNeed: true,
       );
       if (response.statusCode != 200) {
         throw Exception('Failed to logout');

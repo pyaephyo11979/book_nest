@@ -1,13 +1,15 @@
 import 'dart:developer';
 
-import 'package:book_nest/core/services/secure_storage_service.dart';
 import 'package:book_nest/models/book_model.dart';
 import 'package:book_nest/models/user_model.dart';
 import 'package:book_nest/core/services/api_service.dart';
 
 class BookApi {
   Future<List<Map<String, dynamic>>> getCategories() async {
-    final response = await APIService().get(url: '/categories');
+    final response = await APIService().get(
+      url: '/categories',
+      isTokenNeed: true,
+    );
     if (response.statusCode == 200) {
       final List<dynamic> list = response.data['data'];
       return list.map((e) => e as Map<String, dynamic>).toList();
@@ -17,7 +19,7 @@ class BookApi {
   }
 
   Future<List<BookModel>> getBooks() async {
-    final response = await APIService().get(url: '/books');
+    final response = await APIService().get(url: '/books', isTokenNeed: true);
     if (response.statusCode == 200) {
       final List<dynamic> list = response.data['data'];
       return list.map((e) => BookModel.fromJson(e)).toList();
@@ -27,7 +29,10 @@ class BookApi {
   }
 
   Future<List<BookModel>> getFamousBooks() async {
-    final response = await APIService().get(url: '/books/famous');
+    final response = await APIService().get(
+      url: '/books/famous',
+      isTokenNeed: true,
+    );
     if (response.statusCode == 200) {
       final List<dynamic> list = response.data['data'];
       return list.map((e) => BookModel.fromJson(e)).toList();
@@ -37,10 +42,16 @@ class BookApi {
   }
 
   Future<BookModel> getBookById(int id) async {
-    final response = await APIService().get(url: '/books/$id');
+    final response = await APIService().get(
+      url: '/books/$id',
+      isTokenNeed: true,
+    );
     if (response.statusCode == 200) {
       final book = BookModel.fromJson(response.data['data']);
-      book.isBookmarked = response.data['isBookSaved'] as bool? ?? response.data['isBookmarked'] as bool? ?? false;
+      book.isBookmarked =
+          response.data['isBookSaved'] as bool? ??
+          response.data['isBookmarked'] as bool? ??
+          false;
       return book;
     } else {
       throw Exception('Failed to load book');
@@ -48,12 +59,9 @@ class BookApi {
   }
 
   Future<List<BookModel>> searchBooks(String query) async {
-    final header = {
-      'Authorization': 'Bearer ${await SecureStorageService().getAuthToken()}',
-    };
     final response = await APIService().get(
       url: '/books?search=$query',
-      header: header,
+      isTokenNeed: true,
     );
     if (response.statusCode == 200) {
       final List<dynamic> list = response.data['data'];
@@ -64,15 +72,12 @@ class BookApi {
   }
 
   Future<String> incrementReadCount(int id) async {
-    final header = {
-      'Authorization': 'Bearer ${await SecureStorageService().getAuthToken()}',
-    };
     final response = await APIService().patch(
       url: '/books/read/$id',
       body: {},
-      header: header,
+      isTokenNeed: true,
     );
-    log(response.data.toString());
+
     final data = response.data['data'] as Map<String, dynamic>;
     if (response.statusCode == 200) {
       return data['epubUrl'] as String;
@@ -82,12 +87,9 @@ class BookApi {
   }
 
   Future<List<BookModel>> getSavedBooks() async {
-    final header = {
-      'Authorization': 'Bearer ${await SecureStorageService().getAuthToken()}',
-    };
     final response = await APIService().get(
       url: '/saved-books',
-      header: header,
+      isTokenNeed: true,
     );
     if (response.statusCode == 200) {
       final List<dynamic> list = response.data['data'];
@@ -106,13 +108,10 @@ class BookApi {
   }
 
   Future<void> saveBook(int bookId) async {
-    final header = {
-      'Authorization': 'Bearer ${await SecureStorageService().getAuthToken()}',
-    };
     final response = await APIService().post(
       url: '/saved-books/$bookId',
       body: {},
-      header: header,
+      isTokenNeed: true,
     );
     if (response.statusCode != 200 && response.statusCode != 201) {
       throw Exception('Failed to save book');
@@ -120,12 +119,9 @@ class BookApi {
   }
 
   Future<void> removeSavedBook(int bookId) async {
-    final header = {
-      'Authorization': 'Bearer ${await SecureStorageService().getAuthToken()}',
-    };
     final response = await APIService().delete(
       url: '/saved-books/$bookId',
-      header: header,
+      isTokenNeed: true,
     );
     if (response.statusCode != 200) {
       throw Exception('Failed to remove saved book');
@@ -133,12 +129,9 @@ class BookApi {
   }
 
   Future<List<BookModel>> getBooksByCategory(int categoryId) async {
-    final header = {
-      'Authorization': 'Bearer ${await SecureStorageService().getAuthToken()}',
-    };
     final response = await APIService().get(
       url: '/categories/$categoryId/books',
-      header: header,
+      isTokenNeed: true,
     );
     if (response.statusCode == 200) {
       final List<dynamic> list = response.data['data'];
